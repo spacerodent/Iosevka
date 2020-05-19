@@ -39,21 +39,29 @@ ref/
 pages/
 releases/
 release-archives/
-snapshot/assets/
+testdrive/iosevka*
+snapshot/iosevka*
 snapshot/index.css
 
 # Generated scripts
-.buildglyphs.all.patel
-buildglyphs.js
-parameters.js
-support/glyph.js
-support/point.js
 support/anchor.js
+support/glyph.js
+support/parameters.js
+support/point.js
 support/transform.js
 support/simple-expand.js
 support/spiroexpand.js
 support/spirokit.js
 support/utils.js
+gen/build-glyphs.js
 meta/*.js
+otl/*.js
 glyphs/*.js
-testdrive/assets
+
+package-lock.json
+private.toml
+private-build-plans.toml
+private.mk
+
+# Ignore tmp directory
+tmp

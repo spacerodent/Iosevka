@@ -1,6 +1,4 @@
 extern isFinite
-import 'cubic2quad' as cubic2quad
-import 'bezier-js' as Bezier
 import './point' as Point
 import './transform' as : Transform && [object [transformPoint tp] [untransform utp] inverse]
 import './anchor' as Anchor
@@ -25,7 +23,7 @@ define [closepoint p q t] : begin
 define [oncurveRemovable a b c t] : begin
 	local xm : (a.x + c.x) / 2
 	local ym : (a.y + c.y) / 2
-	return : [not a.onCurve] && b.onCurve && [not c.onCurve] && [not a.cubic] && [not c.cubic] && (a.x <= b.x && b.x <= c.x || a.x >= b.x && b.x >= c.x) && (a.y <= b.y && b.y <= c.y || a.y >= b.y && b.y >= c.y) && [Math.abs (b.x - xm)] <= (t / 2) && [Math.abs (b.y - ym)] <= (t / 2)
+	return : [not a.on] && b.on && [not c.on] && [not a.cubic] && [not c.cubic] && (a.x <= b.x && b.x <= c.x || a.x >= b.x && b.x >= c.x) && (a.y <= b.y && b.y <= c.y || a.y >= b.y && b.y >= c.y) && [Math.abs (b.x - xm)] <= (t / 2) && [Math.abs (b.y - ym)] <= (t / 2)
 
 define PRECISION 1000
 define [cov x] : piecewise
@@ -38,6 +36,7 @@ export all : class Glyph
 		set this.unicode {}
 		set this.contours {}
 		set this.advanceWidth 500
+		set this.cmpPriority 0
 		set this.anchors {.}
 		set this.gizmo : Transform.Id
 		set this.dependencies {}
@@ -77,10 +76,6 @@ export all : class Glyph
 	public curveTo : public curve-to
 
 	public [cubic-to x1 y1 x2 y2 x y] : begin
-		#local lastContour this.contours.(this.contours.length - 1)
-		#local lastPoint : utp this.gizmo lastContour.(lastContour.length - 1)
-		#local segments : bezierCubic2Q2 lastPoint {.x x1 .y y1} {.x x2 .y y2} {.x x .y y}
-		#foreach {p0 {.x xc .y yc} {.x xf .y yf}} [items-of segments] : lastContour.push [Point.transformed this.gizmo xc yc false] [Point.transformed this.gizmo xf yf true]
 		this.contours.((this.contours.length - 1)).push
 			Point.transformed this.gizmo x1 y1 false true
 			Point.transformed this.gizmo x2 y2 false true
@@ -93,6 +88,11 @@ export all : class Glyph
 			this.contours.(this.contours.length - 1) = [this.contours.(this.contours.length - 1).reverse]
 		return this
 	public reverseLast : public reverse-last
+
+	public [reverse-all] : begin
+		if this.contours : set this.contours : this.contours.map : lambda [c] : c.reverse
+		return this
+	public reverseAll : public reverse-all
 
 	public [tag-contour tag n] : begin
 		if this.contours : begin
@@ -110,22 +110,12 @@ export all : class Glyph
 			glyph.name : this.dependencies.push glyph.name
 			glyph.dependencies : this.dependencies = [this.dependencies.concat glyph.dependencies]
 		return this
-	public [include component copyAnchors copyWidth] : begin
-		piecewise
-			(component <@ Function) : begin
-				local t this.defaultTag
-				if component.tag : set this.defaultTag component.tag
-				component.call this
-				set this.defaultTag t
-				return this
-			(component <@ Transform) : return : this.apply-transform component copyAnchors
-			(component <@ Array) : begin
-				local contours component
-				local glyph {.contours contours}
-			true : begin
-				local contours component.contours
-				local glyph component
 
+	public [includeGlyph glyph copyAnchors copyWidth] : begin
+		if (glyph <@ Function) : begin
+			throw "\(this.name): Cannot include a function using includeGlyph. Use include instead."
+
+		local contours glyph.contours
 		local shiftx 0
 		local shifty 0
 		local t this
@@ -152,18 +142,31 @@ export all : class Glyph
 			local newcontours {}
 			foreach [contour : items-of contours] : begin
 				local c {}
-				set c.tag : contour.tag || component.tag || t.defaultTag
+				set c.tag : contour.tag || glyph.tag || t.defaultTag
 				foreach [point : items-of contour] : begin
-					c.push : new Point (point.x + shiftx) (point.y + shifty) point.onCurve point.cubic point.subdivided
+					c.push : new Point (point.x + shiftx) (point.y + shifty) point.on point.cubic point.subdivided
 				newcontours.push c
 			set this.contours : this.contours.concat newcontours
 		if (([not contours] || copyAnchors) && glyph.anchors) : begin
 			foreach [k : items-of : Object.keys glyph.anchors] : set this.anchors.(k) glyph.anchors.(k)
 		if (glyph.advanceWidth >= 0 && copyWidth) : set this.advanceWidth glyph.advanceWidth
-		piecewise
-			glyph.name : this.dependencies.push glyph.name
-			glyph.dependencies : this.dependencies = [this.dependencies.concat glyph.dependencies]
+		if glyph.name : this.dependencies.push glyph.name
+		if glyph.dependencies : this.dependencies = [this.dependencies.concat glyph.dependencies]
 		return this
+
+	public [include component copyAnchors copyWidth] : begin
+		piecewise
+			(component <@ Function) : begin
+				local t this.defaultTag
+				if component.tag : set this.defaultTag component.tag
+				component.call this copyAnchors copyWidth
+				set this.defaultTag t
+				return this
+			(component <@ Transform) : return : this.apply-transform component copyAnchors
+			(component <@ Array) : begin
+				return : this.includeGlyph {.contours component} copyAnchors copyWidth
+			true : begin
+				return : this.includeGlyph component copyAnchors copyWidth
 
 	public [apply-transform transform alsoAnchors] : begin
 		foreach [c : items-of this.contours] : foreach [j : range 0 c.length] : set c.(j) : tp transform c.(j)
@@ -178,134 +181,7 @@ export all : class Glyph
 			xytransform this.gizmo mbx mby
 			set this.anchors.(id) : new Anchor x y type mbx mby
 		: else : set this.anchors.(id) : new Anchor x y type
-		return this
-
-	static [contourToSVGPath contour delta] : if (contour && contour.length) : begin
-		local lx contour.0.x
-		local ly contour.0.y
-		local buf : if delta "" "M \[cov lx] \[cov ly]"
-		for [local j 1] (j < contour.length) [inc j] : begin
-			local point contour.(j)
-			piecewise
-				point.onCurve : begin
-					if delta
-					: then : set buf : buf + "l \[cov : point.x - lx] \[cov : point.y - ly]"
-					: else : set buf : buf + "L \[cov point.x] \[cov point.y]"
-					set {.x lx .y ly} point
-				point.cubic : begin
-					local z1 point
-					local z2 contour.(j + 1)
-					local z3 contour.(j + 2)
-					if delta
-					: then : set buf : buf + "c \[cov : z1.x - lx] \[cov : z1.y - ly] \[cov : z2.x - lx] \[cov : z2.y - ly] \[cov : z3.x - lx] \[cov : z3.y - ly]"
-					: else : set buf : buf + "C \[cov z1.x] \[cov z1.y] \[cov z2.x] \[cov z2.y] \[cov z3.x] \[cov z3.y]"
-					set {.x lx .y ly} z3
-					set j : j + 2
-				true : begin
-					local zc point
-					local zf : if contour.(j + 1) contour.(j + 1) contour.0
-					local x1 : mix lx zc.x (2 / 3)
-					local y1 : mix ly zc.y (2 / 3)
-					local x2 : mix zf.x zc.x (2 / 3)
-					local y2 : mix zf.y zc.y (2 / 3)
-					if delta
-					: then : set buf : buf + "c \[cov : x1 - lx] \[cov : y1 - ly] \[cov : x2 - lx] \[cov : y2 - ly] \[cov : zf.x - lx] \[cov : zf.y - ly]"
-					: else : set buf : buf + "C \[cov x1] \[cov y1] \[cov x2] \[cov y2] \[cov zf.x] \[cov zf.y]"
-					set {.x lx .y ly} zf
-					inc j
-		set buf : buf + " Z\n"
-		return buf
-
-	public [cleanup t] : begin
-		foreach c [range 0 this.contours.length] : begin
-			local ocontour this.contours.(c)
-			# add infections
-			local contour {[new Point ocontour.0.x ocontour.0.y ocontour.0.onCurve]}
-			local flag 0
-			foreach [j : range 1 (ocontour.length - 1)] : piecewise
-				flag : dec flag
-				ocontour.(j).onCurve : contour.push ocontour.(j)
-				ocontour.(j).cubic : begin
-					local p0 contour.(contour.length - 1)
-					local p1 ocontour.(j)
-					local p2 ocontour.(j + 1)
-					local p3 ocontour.(j + 2)
-					local strand : new Bezier p0.x p0.y p1.x p1.y p2.x p2.y p3.x p3.y
-					local ts [strand.extrema].y
-					piecewise
-						(!ts || ts.length < 1) : contour.push p1 p2 p3
-						true : begin
-							set ts [ts.sort byx]
-							ts.unshift 0
-							ts.push 1
-							foreach [k : range 0 (ts.length - 1)] : begin
-								local s : strand.split ts.(k) ts.(k + 1)
-								if s.points : begin
-									local quads : cubic2quad
-										* s.points.0.x ; * s.points.0.y
-										* s.points.1.x ; * s.points.1.y
-										* s.points.2.x ; * s.points.2.y
-										* s.points.3.x ; * s.points.3.y
-										* 0.05
-									local m 2
-									while (m < quads.length) : begin
-										contour.push : new Point quads.(m) quads.(m + 1) false
-										contour.push : new Point quads.(m + 2) quads.(m + 3) true
-										inc m 4
-					set flag 2
-				true : begin
-					local p0 contour.(contour.length - 1)
-					local p1 ocontour.(j)
-					local p2 ocontour.(j + 1)
-					if [not p2.onCurve] : set p2 : new Point [mix p1.x p2.x 0.5] [mix p1.y p2.y 0.5] true
-					local strand : new Bezier p0.x p0.y p1.x p1.y p2.x p2.y
-					local ts [strand.extrema].y
-					piecewise
-						(!ts || ts.length < 1) : contour.push p1 p2
-						true : begin
-							set ts [ts.sort byx]
-							ts.unshift 0
-							ts.push 1
-							foreach [k : range 0 (ts.length - 1)] : begin
-								local s : strand.split ts.(k) ts.(k + 1)
-								if s.points : contour.push
-									new Point s.points.1.x s.points.1.y false
-									new Point s.points.2.x s.points.2.y true
-					set flag 1
-
-			contour.push [new Point ocontour.(ocontour.length - 1).x ocontour.(ocontour.length - 1).y ocontour.(ocontour.length - 1).onCurve]
-
-			# cleanup
-			local cleanedContour {}
-			foreach j [range 1 : contour.length - 1] : begin
-				local p0 contour.(j - 1)
-				local p1 contour.(j)
-				local p2 contour.(j + 1)
-				if [oncurveRemovable p0 p1 p2 t] : set p1.unimportant true
-			foreach point [items-of contour] : if [not point.unimportant] : cleanedContour.push point
-			set contour cleanedContour
-
-			set cleanedContour {}
-			foreach j [range 0 contour.length] : if ([not contour.(j).cubic] && [not contour.(j).unimportant]) : begin
-				local found false
-				for [local k : j + 1] ((k < contour.length) && (
-						[not contour.(k).cubic] && [closepoint contour.(j) contour.(k) t]
-					||	contour.(k).cubic && contour.(k + 1).cubic
-							&& [closepoint contour.(j) contour.(k) t]
-							&& [closepoint contour.(j) contour.(k) t]
-							&& [closepoint contour.(j) contour.(k + 2) t])) [inc k] : begin
-					set contour.(k).unimportant true
-					set found true
-					if (contour.(k).cubic && contour.(k + 1).cubic
-							&& [closepoint contour.(j) contour.(k) t]
-							&& [closepoint contour.(j) contour.(k) t]
-							&& [closepoint contour.(j) contour.(k + 2) t]) : begin
-								set contour.(k + 1).unimportant true
-								set contour.(k + 2).unimportant true
-								set k : k + 2
-				if found : begin
-					set contour.(j).onCurve true
-					set j (k - 1)
-			foreach point [items-of contour] : if [not point.unimportant] : cleanedContour.push point
-			this.contours.(c) = cleanedContour
+		if (type == Anchor.MARK) : begin
+			this.start-from x y
+			this.start-from mbx mby
 		return this

@@ -1,8 +1,5 @@
 [iosevka]
-family = 'Iosevka'
-version = '1.9.1'
-codename = 'Ingrid'
-copyright = 'Copyright (c) 2015-2016 Belleve Invis.'
+copyright = 'Copyright (c) 2015-2019 Belleve Invis.'
 licence = '''This font software is licenced under the SIL Open Font Licence, Version 1.1. This is licence is avaliable with a FAQ at: http://scripts.sil.org/OFL. This font software is distributes on an 'AS IS' basis, without warranties or conditions of any kind, either express or implied. See the SIL Open Font licence fot the specific language, premissions and limitations governing your use of this font software.'''
 manufacturer = 'Belleve Invis'
 designer = 'Belleve Invis'
@@ -14,12 +11,19 @@ width = 500        # Character width. Increase this if you think that Iosevka is
 cap = 735          # Cap height (as well as ascender).
 xheight = 530      # X-height.
 #descender = -205  # Depth of descender. Currently unused.
+winMetricAscenderPad  = 0 # Padding of Win ascnder metrics to avoid clipping. See #343
+winMetricDescenderPad = 0 # Padding of Win descender metrics to avoid clipping. See #343
 
-ideoMid  = 365
-parenMid = 365
+symbolMid = 340    # Center of parens, maths, geometrics...
+parenSize = 966    # Size of parens, brackets, braces, slashes, etc.
+operSize = 0.80    # Size of mathematical operators (cups, etc.)
+tackSize = 0.80    # Size of logical operators (tacks, etc.)
+bgopSize = 1.10    # Size of "taller" mathematical operators
+plusSize = 0.52    # Size of plus and arith symbols
+pictSize = 1.10    # Size of pictograms
+arrowHeight = 1.50 # Height of arrows
 
 contrast = 1.11111 # Stroke width contrast.
-essx = 1.12        # Contrast of the middle of 'S'.
 
 slantAngle = 0     # Slant angle, in degrees.
 
@@ -27,47 +31,17 @@ accent = 155       # Height of accent marks.
 accentx = 200      # Width of accent marks.
 overshoot = -8     # Vertical overshoot for arcs.
 overshootx = -8    # Horizontal overshoot for arcs.
-oxhook = -5        # Horizontal overshoot for hook tips.
+oxhook = -2        # Horizontal overshoot for hook tips.
 fovershoot = -40   # Overshoot of the top end of italic `f`.
 
-longjut = 175      # Length of long serifs, like that in `i`.
-jut = 85           # Length of short serifs, used in Slab only.
-vjut = 145         # Length of vertical serifs, used in Slab only.
+shoulderfineMin = 0.8
 
-smooth = 195       # Vertical arc size in capital letters.
-smallsmooth = 220  # Vertical arc size in lowercase letters.
-smoothadjust = 120 # Parameter to balance arcs in slanted shapes.
-superness = 2.2    # Superness of arcs.
-
-barpos = 0.525     # Position of the middle bar in most letters, like `E`.
-overlaypos = 0.52  # Position of the overlay mark.
-ebarpos = 0.50     # Position of the middle bar in `e`.
-gbarpos = 0.42
-pbarpos = 0.53
-fivebarpos = 0.64
-
-hook  = 155        # Hook depth in most letters.
-ahook = 130
-shook = 110
-jhook = 135
-fhook = 120
-rhook = 90
-hookx = 170
-
-tbalance = 50
-tbalance2 = 30
-rbalance = 60
-rbalance2 = 15
-jbalance = 63
-fbalance = 6
-onebalance = 30
-
-isBold = false     # Mark the font as bold?
 isItalic = false   # Use italic shapes?
+isOblique = false  # Use oblique shapes?
 
 lllcrowdedness = 3.33333333
 
-spacing = 1 # Spacing indicator
+spacing = 1        # Spacing indicator
 
 # Powerline-specific parameters
 powerlineScaleY = 1 # Vertical scale
@@ -75,520 +49,426 @@ powerlineScaleX = 1 # Horizontal scale
 powerlineShiftY = 0 # Vertical shift
 powerlineShiftX = 0 # Horizontal shift
 
-[iosevka.variantSelector]
+# Diversity widths
+diversityM = 1
+diversityF = 1
+diversityI = 1
+diversityII = 1
 
-[iosevka.sscompose.upright]
-ss01 = ['cv01', 'cv11', 'cv05', 'cv10', 'cv14', 'cv18'] # Andale Mono Style
-ss02 = ['cv01', 'cv12', 'cv03', 'cv07', 'cv13', 'cv19'] # Anonymous Pro Style
-ss03 = ['cv01', 'cv11', 'cv03', 'cv07', 'cv13', 'cv18'] # Consolas Style
-ss04 = ['cv01', 'cv12', 'cv03', 'cv08', 'cv13', 'cv19'] # Menlo Style
-ss05 = ['cv01', 'cv24', 'cv03', 'cv08', 'cv14', 'cv18'] # Fira Mono Style
-ss06 = ['cv01', 'cv12', 'cv03', 'cv07', 'cv14', 'cv18'] # Liberation Mono Style
-ss07 = ['cv02', 'cv12', 'cv06', 'cv10', 'cv13', 'cv18'] # Monaco Style
-ss08 = ['cv01', 'cv11', 'cv03', 'cv07', 'cv14', 'cv19'] # Pragmata Pro Style
-ss09 = ['cv01', 'cv11', 'cv05', 'cv08', 'cv14', 'cv19'] # Source Code Pro Style
+# Whether to generate CV-SS features
+enableCvSs = true
 
-[iosevka.sscompose.italic]
-ss01 = ['cv01', 'cv11', 'cv05', 'cv10', 'cv14', 'cv18'] # Andale Mono Style
-ss02 = ['cv01', 'cv12', 'cv03', 'cv07', 'cv13', 'cv19'] # Anonymous Pro Style
-ss03 = ['cv02', 'cv12', 'cv04', 'cv08', 'cv13', 'cv18'] # Consolas Style
-ss04 = ['cv01', 'cv12', 'cv03', 'cv08', 'cv13', 'cv19'] # Menlo Style
-ss05 = ['cv01', 'cv24', 'cv03', 'cv08', 'cv14', 'cv18'] # Fira Mono Style
-ss06 = ['cv01', 'cv12', 'cv03', 'cv07', 'cv14', 'cv18'] # Liberation Mono Style
-ss07 = ['cv02', 'cv12', 'cv06', 'cv10', 'cv13', 'cv18'] # Monaco Style
-ss08 = ['cv01', 'cv12', 'cv03', 'cv07', 'cv14', 'cv19'] # Pragmata Pro Style
-ss09 = ['cv02', 'cv12', 'cv04', 'cv08', 'cv14', 'cv19'] # Source Code Pro Style
+# Whether to generate ligation
+enableLigation = true
 
-[verbose]
-verbose = true
+# Excluded code points
+excludedCodePointRanges = []
 
-# Spacings
+[shapeWeight.blend.400]
+stroke = 72       # Primary stroke width
+sb = 60           # Primary sidebearings
+essx = 1.12       # Proportion of widen of center of "S"
+dotsize = 125     # Size of dots
+periodsize = 140  # Size of period
 
-[term]
-spacing = 0
-disableLigation = true
+jut = 85          # Length of slab serif
+vjut = 145        # Length of vertical slab serif
+longjut = 175      # Length of long serifs, like that in `i`.
 
-[term.adds]
-family = ' Term'
+smooth = 195             # Vertical arc size in capital letters.
+smallsmooth = 200        # Vertical arc size in lowercase letters.
+smoothadjust = 110       # Parameter to balance arcs in slanted shapes.
+superness = 2.275        # Superness of arcs.
+tightHookSuperness = 2.3 # superness of tight hooks
 
-[cc]
-spacing = 3
-fullwidth_codes = [
-	164, #¤
-	167, #§
-	177, #±
-	183, #·
-	215, #×
-	247, #÷
-	711, #ˇ
-	713, #ˉ
-	8212, #—
-	8214, #‖
-	8216, #‘
-	8217, #’
-	8220, #“
-	8221, #”
-	8230, #…
-	8242, #′
-	8243, #″
-	8251, #※
-	8451, #℃
-	8544, #Ⅰ
-	8545, #Ⅱ
-	8546, #Ⅲ
-	8547, #Ⅳ
-	8548, #Ⅴ
-	8549, #Ⅵ
-	8550, #Ⅶ
-	8551, #Ⅷ
-	8552, #Ⅸ
-	8553, #Ⅹ
-	8554, #Ⅺ
-	8555, #Ⅻ
-	8592, #←
-	8593, #↑
-	8594, #→
-	8595, #↓
-	8712, #∈
-	8719, #∏
-	8721, #∑
-	8733, #∝
-	8734, #∞
-	8736, #∠
-	8741, #∥
-	8743, #∧
-	8744, #∨
-	8745, #∩
-	8746, #∪
-	8747, #∫
-	8750, #∮
-	8756, #∴
-	8757, #∵
-	8758, #∶
-	8759, #∷
-	8765, #∽
-	8776, #≈
-	8780, #≌
-	8800, #≠
-	8801, #≡
-	8804, #≤
-	8805, #≥
-	8814, #≮
-	8815, #≯
-	8857, #⊙
-	8869, #⊥
-	8978, #⌒
-	9312, #①
-	9313, #②
-	9314, #③
-	9315, #④
-	9316, #⑤
-	9317, #⑥
-	9318, #⑦
-	9319, #⑧
-	9320, #⑨
-	9321, #⑩
-	9332, #⑴
-	9333, #⑵
-	9334, #⑶
-	9335, #⑷
-	9336, #⑸
-	9337, #⑹
-	9338, #⑺
-	9339, #⑻
-	9340, #⑼
-	9341, #⑽
-	9342, #⑾
-	9343, #⑿
-	9344, #⒀
-	9345, #⒁
-	9346, #⒂
-	9347, #⒃
-	9348, #⒄
-	9349, #⒅
-	9350, #⒆
-	9351, #⒇
-	9352, #⒈
-	9353, #⒉
-	9354, #⒊
-	9355, #⒋
-	9356, #⒌
-	9357, #⒍
-	9358, #⒎
-	9359, #⒏
-	9360, #⒐
-	9361, #⒑
-	9362, #⒒
-	9363, #⒓
-	9364, #⒔
-	9365, #⒕
-	9366, #⒖
-	9367, #⒗
-	9368, #⒘
-	9369, #⒙
-	9370, #⒚
-	9371, #⒛
-	9472, #─
-	9473, #━
-	9474, #│
-	9475, #┃
-	9476, #┄
-	9477, #┅
-	9478, #┆
-	9479, #┇
-	9480, #┈
-	9481, #┉
-	9482, #┊
-	9483, #┋
-	9484, #┌
-	9485, #┍
-	9486, #┎
-	9487, #┏
-	9488, #┐
-	9489, #┑
-	9490, #┒
-	9491, #┓
-	9492, #└
-	9493, #┕
-	9494, #┖
-	9495, #┗
-	9496, #┘
-	9497, #┙
-	9498, #┚
-	9499, #┛
-	9500, #├
-	9501, #┝
-	9502, #┞
-	9503, #┟
-	9504, #┠
-	9505, #┡
-	9506, #┢
-	9507, #┣
-	9508, #┤
-	9509, #┥
-	9510, #┦
-	9511, #┧
-	9512, #┨
-	9513, #┩
-	9514, #┪
-	9515, #┫
-	9516, #┬
-	9517, #┭
-	9518, #┮
-	9519, #┯
-	9520, #┰
-	9521, #┱
-	9522, #┲
-	9523, #┳
-	9524, #┴
-	9525, #┵
-	9526, #┶
-	9527, #┷
-	9528, #┸
-	9529, #┹
-	9530, #┺
-	9531, #┻
-	9532, #┼
-	9533, #┽
-	9534, #┾
-	9535, #┿
-	9536, #╀
-	9537, #╁
-	9538, #╂
-	9539, #╃
-	9540, #╄
-	9541, #╅
-	9542, #╆
-	9543, #╇
-	9544, #╈
-	9545, #╉
-	9546, #╊
-	9547, #╋
-	9632, #■
-	9633, #□
-	9650, #▲
-	9651, #△
-	9670, #◆
-	9671, #◇
-	9675, #○
-	9678, #◎
-	9679, #●
-	9733, #★
-	9734, #☆
-	9792, #♀
-	9794, #♂
-	8211, #–
-	8213, #―
-	8229, #‥
-	8245, #‵
-	8453, #℅
-	8457, #℉
-	8598, #↖
-	8599, #↗
-	8600, #↘
-	8601, #↙
-	8725, #∕
-	8735, #∟
-	8739, #∣
-	8786, #≒
-	8806, #≦
-	8807, #≧
-	8895, #⊿
-	9552, #═
-	9553, #║
-	9554, #╒
-	9555, #╓
-	9556, #╔
-	9557, #╕
-	9558, #╖
-	9559, #╗
-	9560, #╘
-	9561, #╙
-	9562, #╚
-	9563, #╛
-	9564, #╜
-	9565, #╝
-	9566, #╞
-	9567, #╟
-	9568, #╠
-	9569, #╡
-	9570, #╢
-	9571, #╣
-	9572, #╤
-	9573, #╥
-	9574, #╦
-	9575, #╧
-	9576, #╨
-	9577, #╩
-	9578, #╪
-	9579, #╫
-	9580, #╬
-	9581, #╭
-	9582, #╮
-	9583, #╯
-	9584, #╰
-	9585, #╱
-	9586, #╲
-	9587, #╳
-	9601, #▁
-	9602, #▂
-	9603, #▃
-	9604, #▄
-	9605, #▅
-	9606, #▆
-	9607, #▇
-	9608, #█
-	9609, #▉
-	9610, #▊
-	9611, #▋
-	9612, #▌
-	9613, #▍
-	9614, #▎
-	9615, #▏
-	9619, #▓
-	9620, #▔
-	9621, #▕
-	9660, #▼
-	9661, #▽
-	9698, #◢
-	9699, #◣
-	9700, #◤
-	9701, #◥
-	9737, #☉
-	8853, #⊕
-]
+barpos = 0.525       # Position of most crossbars
+overlaypos = 0.52    # Position of the overlay mark.
+ebarpos = 0.50       # Position of the middle bar in `e`.
+gbarpos = 0.42
+fivebarpos = 0.64
+fbarpos = 0.91       # Position of the middle bar in `f`
+fbarStrokeAdj = 0.25 # Portion of the fill above the f-bar position
 
-[cc.adds]
-family = 'CC'
+rbalance = 60
+rbalance2 = 15
+tbalance = 50
+tbalance2 = 30
+jbalance = 63
+fbalance = 6
+onebalance = 30
 
+hook  = 155        # Hook depth in most letters.
+ahook = 130
+shook = 110
+jhook = 135
+fhook = 120
+hookx = 170
+rhook = 110
 
+cthin = 0.75
+cthinb = 0.5
+vtipfine = 0.8
+vtipfineSlab = 0.9
 
-# Weights
-
-[w-book]
-isBold = false
-weight = 400       # "Weight" metadata.
-style = ''
-
-sb = 60            # Side bearing.
-stroke = 72        # Stroke width of horizontal strokes.
-dotsize = 125      # "Visual" size of dots in /i.
-periodsize = 140   # "Visual" size of period.
-
-[w-thin]
-weight = 100
-style = 'Thin'
-
+[shapeWeight.blend.100]
+jut = 85
+vjut = 145
+smooth = 195
+barpos = 0.525
+rhook = 110
+rbalance = 60
+rbalance2 = 15
+cthin = 0.9
+cthinb = 0.9
+vtipfine = 1
+vtipfineSlab = 1
 stroke = 18
 sb = 72
 dotsize = 53
 periodsize = 55
 
-cthin = 0.9
-cthinb = 0.9
+[shapeWeight.blend.200]
+jut = 85
+vjut = 145
+smooth = 195
+barpos = 0.525
+rhook = 110
+rbalance = 60
+rbalance2 = 15
+cthin = 0.75
+cthinb = 0.75
 vtipfine = 1
-shoulderfine = 0.8
-pbarpos = 0.5
-
-[w-extralight]
-weight = 200
-style = 'Extralight'
-
+vtipfineSlab = 1
 stroke = 36
 sb = 68
 dotsize = 70
 periodsize = 77
 
+[shapeWeight.blend.300]
+jut = 85
+vjut = 145
+smooth = 195
+barpos = 0.525
+rhook = 110
+rbalance = 60
+rbalance2 = 15
 cthin = 0.75
-cthinb = 0.75
-vtipfine = 1
-pbarpos = 0.5
-
-[w-light]
-weight = 300
-style = 'Light'
-
+cthinb = 0.5
+vtipfine = 0.9
+vtipfineSlab = 0.9
 stroke = 56
 sb = 64
 dotsize = 100
 periodsize = 115
 
-vtipfine = 0.9
-pbarpos = 0.51
+[shapeWeight.blend.500]
+essx = 1.12
+jut = 85
+vjut = 157
+smooth = 200
+barpos = 0.525
+rhook = 110
+rbalance = 60
+rbalance2 = 15
+stroke = 84
+sb = 57
+dotsize = 135
+periodsize = 160
 
-[w-medium]
-weight = 500
-style = 'Medium'
-
-sb = 54
-stroke = 90
-dotsize = 140
-periodsize = 165
+[shapeWeight.blend.600]
 essx = 1.07
-
+jut = 85
+vjut = 170
+smooth = 203
+barpos = 0.525
+rhook = 110
 rbalance = 55
 rbalance2 = 20
-smooth = 203
+stroke = 97
+sb = 54
+dotsize = 145
+periodsize = 168
 
-[w-bold]
-isBold = true
-weight = 700
-style = 'Bold'
-
-sb = 45
-stroke = 108
-dotsize = 160
-periodsize = 180
-essx = 1.05
-essxq = 1.15
-jut = 90
-vjut = 165
-
+[shapeWeight.blend.700]
+essx = 1.06
+jut = 89
+vjut = 179
+smooth = 206
 barpos = 0.51
-fivebarpos = 0.64
+rhook = 95
+rbalance = 52
+rbalance2 = 23
+stroke = 106
+sb = 50
+dotsize = 157
+periodsize = 180
+
+[shapeWeight.blend.800]
+essx = 1.05
+jut = 96
+vjut = 189
+smooth = 210
+barpos = 0.51
+rhook = 97
 rbalance = 50
 rbalance2 = 25
-rhook = 95
-smooth = 210
+stroke = 116
+sb = 45
+dotsize = 167
+periodsize = 188
 
-[w-heavy]
-isBold = true
-weight = 900
-style = 'Heavy'
-
-sb = 42
+[shapeWeight.blend.900]
+essx = 1.03
+jut = 100
+vjut = 199
+smooth = 215
+barpos = 0.51
+rhook = 105
+rbalance = 50
+rbalance2 = 25
 stroke = 126
+sb = 42
 dotsize = 180
 periodsize = 200
-essx = 1.03
-essxq = 1.15
-jut = 100
-vjut = 175
 
-barpos = 0.51
-fivebarpos = 0.64
-rbalance = 50
-rbalance2 = 25
-rhook = 105
-smooth = 215
+[verbose]
+verbose = true
 
-# Slants
-[s-upright]
-isItalic = false
-
+### Slantness
 [s-italic]
 isItalic = true
 slantAngle = 10
 jhook = 120
 
-[s-italic.adds]
-style = " Italic"
-
 [s-oblique]
 isOblique = true
-isItalic = false
 slantAngle = 10
 jhook = 120
 
-[s-oblique.adds]
-style = " Oblique"
-
-# Slab variant
+### Slab variant
 [slab]
 slab = true
 onebalance = 10
 overshootx = -16
 [slab.multiplies]
 sb = 1.1
-[slab.adds]
-family = " Slab"
 
-# Variants
-[v-l-hooky.variantSelector]
-l = 'hooky'
-[v-i-hooky.variantSelector]
-dotlessi = 'hooky'
-[v-l-zshaped.variantSelector]
-l = 'zshaped'
-[v-i-zshaped.variantSelector]
-dotlessi = 'zshaped'
-[v-l-serifed.variantSelector]
-l = 'serifed'
-[v-i-serifed.variantSelector]
-dotlessi = 'serifed'
-[v-l-italic.variantSelector]
-l = 'italic'
-[v-i-italic.variantSelector]
-dotlessi = 'italic'
-[v-a-singlestorey.variantSelector]
-a = 'singlestorey'
-[v-a-doublestorey.variantSelector]
-a = 'doublestorey'
-[v-g-singlestorey.variantSelector]
-g = 'singlestorey'
-[v-g-doublestorey.variantSelector]
-g = 'doublestorey'
-[v-g-opendoublestorey.variantSelector]
-g = 'opendoublestorey'
-[v-zero-slashed.variantSelector]
-zero = 'slashed'
-[v-zero-dotted.variantSelector]
-zero = 'dotted'
-[v-zero-unslashed.variantSelector]
-zero = 'unslashed'
-[v-tilde-high.variantSelector]
-asciitilde = 'high'
-[v-tilde-low.variantSelector]
-asciitilde = 'low'
-[v-asterisk-high.variantSelector]
-asterisk = 'high'
-[v-asterisk-low.variantSelector]
-asterisk = 'low'
-[v-underscore-high.variantSelector]
-underscore = 'high'
-[v-underscore-low.variantSelector]
-underscore = 'low'
-[v-paragraph-high.variantSelector]
-paragraph = 'high'
-[v-paragraph-low.variantSelector]
-paragraph = 'low'
+### Spacings
+# Fixed variant
+[sp-fixed]
+spacing = 0
+enableLigation = false
+forceMonospace = true
+
+# Terminal variant
+[sp-term]
+spacing = 0
+
+###### Widths
+# NOTE: this section is highly experimental
+# HANDLE WITH EXTREME CARE
+# Expanded : I heard someone want it being wider...
+[wd-7.multiplies]
+width   = 1.152 # 576mem for normal char
+sb      = 1.375
+jut     = 1.15
+longjut = 1.15
+rhook   = 1.15
+rbalance = 1.152
+tbalance = 1.100
+
+[extended]
+inherits = ['wd-7']
+
+# Compressed : And someone else want it being narrower
+[wd-3.multiplies]
+width = 0.9
+sb = 0.9
+[condensed]
+inherits = ['wd-3']
+
+[diversity-1]
+diversityM = 1.25
+diversityF = 1.00
+diversityI = 0.75
+diversityII = 0.75
+
+[diversity-2]
+diversityM = 1.25
+diversityF = 0.75
+diversityI = 0.75
+diversityII = 0.5
+
+[no-ligation]
+enableLigation = false
+[nolig] # For compatibility
+enableLigation = false
+
+[no-cv-ss]
+enableCvSs = false
+
+###################################################################################################
+### Metric-override hives
+### These hives are now discouraged in favor of 'metric-override' in build plans but they are
+### still supported in version 3.x.
+
+###### Leading
+[leading-750]
+leading = 750
+[leading-1000]
+leading = 1000
+[leading-1250]
+leading = 1250
+[leading-1500]
+leading = 1500
+[leading-1750]
+leading = 1750
+[leading-2000]
+leading = 2000
+
+###### Win metric pad
+[win-metric-pad-0]
+winMetricAscenderPad = 0
+winMetricDescenderPad = 0
+[win-metric-pad-50]
+winMetricAscenderPad = 50
+winMetricDescenderPad = 50
+[win-metric-pad-100]
+winMetricAscenderPad = 100
+winMetricDescenderPad = 100
+[win-metric-pad-150]
+winMetricAscenderPad = 150
+winMetricDescenderPad = 150
+[win-metric-pad-200]
+winMetricAscenderPad = 200
+winMetricDescenderPad = 200
+[win-metric-pad-250]
+winMetricAscenderPad = 250
+winMetricDescenderPad = 250
+[win-metric-pad-300]
+winMetricAscenderPad = 300
+winMetricDescenderPad = 300
+
+###### Powerline
+[powerline-scale-y-750]
+powerlineScaleY = 0.75
+[powerline-scale-y-875]
+powerlineScaleY = 0.875
+[powerline-scale-y-1000]
+powerlineScaleY = 1
+[powerline-scale-y-1125]
+powerlineScaleY = 1.125
+[powerline-scale-y-1250]
+powerlineScaleY = 1.25
+[powerline-scale-y-1375]
+powerlineScaleY = 1.375
+[powerline-scale-y-1500]
+powerlineScaleY = 1.5
+[powerline-scale-x-750]
+powerlineScaleX = 0.75
+[powerline-scale-x-875]
+powerlineScaleX = 0.875
+[powerline-scale-x-1000]
+powerlineScaleX = 1
+[powerline-scale-x-1125]
+powerlineScaleX = 1.125
+[powerline-scale-x-1250]
+powerlineScaleX = 1.25
+[powerline-scale-x-1375]
+powerlineScaleX = 1.375
+[powerline-scale-x-1500]
+powerlineScaleX = 1.5
+[powerline-shift-y-n500]
+powerlineShiftY = -500
+[powerline-shift-y-n450]
+powerlineShiftY = -450
+[powerline-shift-y-n400]
+powerlineShiftY = -400
+[powerline-shift-y-n350]
+powerlineShiftY = -350
+[powerline-shift-y-n300]
+powerlineShiftY = -300
+[powerline-shift-y-n250]
+powerlineShiftY = -250
+[powerline-shift-y-n200]
+powerlineShiftY = -200
+[powerline-shift-y-n150]
+powerlineShiftY = -150
+[powerline-shift-y-n100]
+powerlineShiftY = -100
+[powerline-shift-y-n50]
+powerlineShiftY = -50
+[powerline-shift-y-0]
+powerlineShiftY = 0
+[powerline-shift-y-p50]
+powerlineShiftY = 50
+[powerline-shift-y-p100]
+powerlineShiftY = 100
+[powerline-shift-y-p150]
+powerlineShiftY = 150
+[powerline-shift-y-p200]
+powerlineShiftY = 200
+[powerline-shift-y-p250]
+powerlineShiftY = 250
+[powerline-shift-y-p300]
+powerlineShiftY = 300
+[powerline-shift-y-p350]
+powerlineShiftY = 350
+[powerline-shift-y-p400]
+powerlineShiftY = 400
+[powerline-shift-y-p450]
+powerlineShiftY = 450
+[powerline-shift-y-p500]
+powerlineShiftY = 500
+[powerline-shift-x-n500]
+powerlineShiftX = -500
+[powerline-shift-x-n450]
+powerlineShiftX = -450
+[powerline-shift-x-n400]
+powerlineShiftX = -400
+[powerline-shift-x-n350]
+powerlineShiftX = -350
+[powerline-shift-x-n300]
+powerlineShiftX = -300
+[powerline-shift-x-n250]
+powerlineShiftX = -250
+[powerline-shift-x-n200]
+powerlineShiftX = -200
+[powerline-shift-x-n150]
+powerlineShiftX = -150
+[powerline-shift-x-n100]
+powerlineShiftX = -100
+[powerline-shift-x-n50]
+powerlineShiftX = -50
+[powerline-shift-x-0]
+powerlineShiftX = 0
+[powerline-shift-x-p50]
+powerlineShiftX = 50
+[powerline-shift-x-p100]
+powerlineShiftX = 100
+[powerline-shift-x-p150]
+powerlineShiftX = 150
+[powerline-shift-x-p200]
+powerlineShiftX = 200
+[powerline-shift-x-p250]
+powerlineShiftX = 250
+[powerline-shift-x-p300]
+powerlineShiftX = 300
+[powerline-shift-x-p350]
+powerlineShiftX = 350
+[powerline-shift-x-p400]
+powerlineShiftX = 400
+[powerline-shift-x-p450]
+powerlineShiftX = 450
+[powerline-shift-x-p500]
+powerlineShiftX = 500
+
+# Compatibility PUA ligature sample
+# [[iosevka.compLig]]
+# unicode = 57600 # 0xE100
+# featureTag = 'XV00'
+# sequence = '<*>'
+
+# Exclude code points
+[exclude-check-and-cross-symbol.appends]
+excludedCodePointRanges = [[10003, 10008]]
